@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <div>
         <Navbar />
-       <Content /> 
+        { this.props.contractsLoaded ? <Content /> : <div className="content"></div> }
       </div>
     );
   }
