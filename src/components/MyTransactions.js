@@ -8,8 +8,7 @@ import {
   myOpenOrdersLoadedSelector,
   myOpenOrdersSelector,
 } from '../store/selectors'
-const showMyFilledOrders = (props)  => {
-  const { myFilledOrders } = props
+const showMyFilledOrders = (myFilledOrders)  => {
    return(
     <tbody>
       { myFilledOrders.map((order) => {
@@ -59,7 +58,7 @@ class MyTransactions extends Component {
                     <th>DAPP/ETH</th>
                   </tr>
                 </thead>
-                { this.props.showFilledOrders ? showMyFilledOrders(this.props.myFilledOrders) : <Spinner type="table" />}
+                { this.props.showMyFilledOrders ? showMyFilledOrders(this.props.myFilledOrders) : <Spinner type="table" />}
               </table>
             </Tab>
             <Tab eventKey="orders" title="Orders">
