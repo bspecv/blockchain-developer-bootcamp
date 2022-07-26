@@ -6,7 +6,9 @@ import {
   exchangeLoaded,
   cancelledOrdersLoaded,
   filledOrdersLoaded,
-  allOrdersLoaded
+  allOrdersLoaded,
+  orderCancelling,
+  orderCancelled
 } from './actions'
 import Token from '../abis/Token.json'
 import Exchange from '../abis/Exchange.json'
@@ -72,8 +74,6 @@ export const loadAllOrders = async (exchange, dispatch) => {
   // Add cancelled orders to the redux store
   dispatch(filledOrdersLoaded(filledOrders))
   
-
-
   // Load order stream
   const orderStream = await exchange.getPastEvents('Order', { fromBlock: 0,  toBlock: 'latest' })
   // Format order stream
@@ -83,6 +83,23 @@ export const loadAllOrders = async (exchange, dispatch) => {
   
 }
 
+export const cancelOrder = (dispatch, exchange, order, account) => {
+exchange.methods.cancelOrder(order.id).send({from:account})
+.on('transactionHash',(hash) => {
+  dispatch(orderCancelling())
+})
+
+.on('error', (error) => {
+  console.log (error)
+  window.alert('There was an error!')
+})
+}
+
+export const subscribeToEvents = async (exchange, dispatch) => {
+  exchange.events.Cancel({}, (error, event) => {
+    dispatch(orderCancelled(event.returnValues))
+  })
+}
 
 
 
