@@ -17,11 +17,11 @@ module.exports = {
       provider: function () {
        return new HDWalletProvider(
         privateKeys.split(','), //Array for private keys
-        `https://koven.infura.io/v3/${process.env.INFURA_API_KEY}`
+        `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`
        )
       },
-      gas:5000000,
-      gasPrice:25000000000,
+      gas:6000000,
+      gasPrice:35000000000,
       network_id: 42
     }
   },
