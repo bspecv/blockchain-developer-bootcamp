@@ -39,10 +39,14 @@ export const loadWeb3 = async (dispatch) => {
 export const loadAccount = async (web3, dispatch) => {
   const accounts = window.ethereum.request({ method: 'eth_requestAccounts' });
   const account = web3.utils.toChecksumAddress(accounts[0])
+  if(typeof account !== 'undefined') {
   dispatch(web3AccountLoaded(account))
     return account
+  } else {
+    window.alert('Please login with MetaMask')
+    return null
   }
-
+}
 
 export const loadToken = async (web3, networkId, dispatch) => {
   try {
